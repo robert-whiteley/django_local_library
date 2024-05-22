@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% load static %}
+
+{% block title %}
+<title>Chart View</title>
+{% endblock %}
+
+{% block content %}
+<h2>Chart Example</h2>
+<div style="width: 100%; height: 80vh;">
+    <canvas id="acquisitions"></canvas>
+</div>
+<!-- Include Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Include your custom script -->
+<script src="{% static 'catalog/js/acquisitions.js' %}"></script>
+{% endblock %}
