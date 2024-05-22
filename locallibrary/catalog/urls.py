@@ -32,3 +32,9 @@ urlpatterns += [
     path('book/<int:pk>/update/', views.BookUpdate.as_view(), name='book-update'),
     path('book/<int:pk>/delete/', views.BookDelete.as_view(), name='book-delete'),
 ]
+
+urlpatterns += [
+    path('chart/', views.chart, name='chart'),
+    path('chart2/', views.chart_view, name='chart-view'),
+    path('chart2/data', views.books_per_author_chart, name = 'books-per-author-chart'),
+]

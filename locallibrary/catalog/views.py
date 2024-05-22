@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required, permission_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Author
@@ -180,3 +180,28 @@ class BookDelete(PermissionRequiredMixin, DeleteView):
             return HttpResponseRedirect(
                 reverse("book-delete", kwargs={"pk": self.object.pk})
             )
+
+def chart(request):
+
+    context = {}
+
+    return render(request, 'chart.html', context=context)
+
+def books_per_author_chart(request):
+    book_instance_counts = {}
+    for book in Book.objects.all():
+        book_instance_counts[book.title] = book.bookinstance_set.all().count()
+
+    return JsonResponse({
+        "title": "Books per Author",
+        "data": {
+            "labels": list(book_instance_counts.keys()),
+            "datasets": [{
+                "label": "Quantity",
+                "data": list(book_instance_counts.values()),
+            }]
+            },
+        })
+
+def chart_view(request):
+    return render(request, 'chart2.html')
